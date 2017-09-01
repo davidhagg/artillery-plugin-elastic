@@ -1,0 +1,34 @@
+{
+  "name": "artillery-plugin-elastic",
+  "version": "1.0.1",
+  "description": "artillery.io plugin that sends response data into ElasticSearch",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidhagg/artillery-plugin-elastic.git"
+  },
+  "keywords": [
+    "artillery",
+    "elasticsearch"
+  ],
+  "author": "David Hägg davvahagg@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidhagg/artillery-plugin-elastic/issues"
+  },
+  "homepage": "https://github.com/davidhagg/artillery-plugin-elastic",
+  "dependencies": {
+    "debug": "^3.0.1",
+    "elasticsearch": "^13.3.1",
+    "lodash": "^4.17.4",
+    "supports-color": "^4.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.9.0",
+    "mocha": "^3.5.0",
+    "chai": "^4.1.1"
+  }
+}
