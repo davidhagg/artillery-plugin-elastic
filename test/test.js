@@ -18,7 +18,7 @@ describe('Configuration', function () {
 
   });
 
-  it('should be able to overridable', function () {
+  it('should be overridable', function () {
     var config = {
       plugins: {
         elastic: {

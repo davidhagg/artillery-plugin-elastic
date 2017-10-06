@@ -4,13 +4,14 @@ var elasticsearch = require('elasticsearch');
 var lodash = require('lodash');
 var debug = require('debug')('plugins:elastic');
 
-debug.enabled = true;
-
 function ElasticPlugin(rawConfig, ee) {
   var self = this;
   self._report = [];
 
   var config = _reconcileConfigs(rawConfig);
+
+  debug.enabled = config.logLevel === 'trace'
+
   debug('artillery plugin elastic.config: ' + JSON.stringify(config));
 
   var client = new elasticsearch.Client({
@@ -27,7 +28,7 @@ function ElasticPlugin(rawConfig, ee) {
   ee.on('stats', function (statsObject) {
     debug('on.stats()');
 
-    var stats = statsObject.report()
+    var stats = statsObject.report();
 
     if (config.enableUselessReporting) {
       self._report.push({ timestamp: stats.timestamp, value: 'test' });
@@ -43,9 +44,6 @@ function ElasticPlugin(rawConfig, ee) {
 
     var cleanedStats = _cleanStats(stats, config.skipList, config.defaultValue);
     var success = _sendToElastic(client, cleanedStats, 'done', config.indexPrefix);
-
-    debug('sent stuff waiting...');
-
   });
 
   return this;
@@ -69,8 +67,12 @@ function _sendToElastic(client, stats, type, indexPrefix) {
     type: type,
     body: stats,
   }, function (error, response) {
+    if (error)
+      debug(JSON.stringify(error));
+
     debug(JSON.stringify(response));
 
+    debug('elastic request done');
     return true;
   });
 }
